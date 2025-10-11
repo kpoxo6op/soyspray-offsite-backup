@@ -1,0 +1,14 @@
+.terraform/
+terraform.tfstate
+terraform.tfstate.backup
+terraform.tfstate.*
+crash.log
+.terraform.lock.hcl
+.env
+.writer-credentials.env
+*.zip
+*.tgz
+*.gz
+*.zst
+.DS_Store
+
