@@ -13,8 +13,8 @@ output "restorer_user" {
   description = "IAM username for restore operations"
 }
 
-# Secrets Manager outputs disabled to save $0.40/month
-# Credentials stored in .writer-credentials.env
+# Secrets Manager disabled to save $0.40/month
+# Use manual credential retrieval via Terraform state instead
 # output "writer_secret_name" {
 #   value       = aws_secretsmanager_secret.writer.name
 #   description = "Secrets Manager secret name for immich-writer credentials"
