@@ -1,3 +1,4 @@
+# terraform/iam.tf
 resource "aws_iam_user" "writer" {
   name          = var.writer_username
   force_destroy = true
@@ -24,7 +25,8 @@ data "aws_iam_policy_document" "writer" {
     effect = "Allow"
     actions = [
       "s3:PutObject",
-      "s3:AbortMultipartUpload"
+      "s3:AbortMultipartUpload",
+      "s3:GetObject"
     ]
     resources = [
       "${aws_s3_bucket.backup.arn}/*"
