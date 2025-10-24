@@ -13,6 +13,17 @@ output "restorer_user" {
   description = "IAM username for restore operations"
 }
 
+output "restorer_access_key_id" {
+  value       = aws_iam_access_key.restorer.id
+  description = "Restorer access key ID"
+}
+
+output "restorer_secret_access_key" {
+  value       = aws_iam_access_key.restorer.secret
+  description = "Restorer secret access key"
+  sensitive   = true
+}
+
 # Secrets Manager disabled to save $0.40/month
 # Use manual credential retrieval via Terraform state instead
 # output "writer_secret_name" {
