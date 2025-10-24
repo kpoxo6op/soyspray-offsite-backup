@@ -96,3 +96,7 @@ resource "aws_iam_access_key" "writer" {
   user = aws_iam_user.writer.name
 }
 
+resource "aws_iam_access_key" "restorer" {
+  user = aws_iam_user.restorer.name
+}
+
