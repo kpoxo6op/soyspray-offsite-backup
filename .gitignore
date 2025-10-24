@@ -12,3 +12,4 @@ crash.log
 *.zst
 .DS_Store
 soyspray-offsite-backup.txt
+.restorer-credentials.env
