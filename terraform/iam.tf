@@ -17,7 +17,8 @@ data "aws_iam_policy_document" "writer" {
     effect  = "Allow"
     actions = ["s3:ListBucket"]
     resources = [
-      aws_s3_bucket.backup.arn
+      aws_s3_bucket.backup.arn,
+      aws_s3_bucket.obsidian_backup.arn
     ]
   }
   statement {
@@ -29,7 +30,8 @@ data "aws_iam_policy_document" "writer" {
       "s3:GetObject"
     ]
     resources = [
-      "${aws_s3_bucket.backup.arn}/*"
+      "${aws_s3_bucket.backup.arn}/*",
+      "${aws_s3_bucket.obsidian_backup.arn}/*"
     ]
   }
   statement {
@@ -40,7 +42,8 @@ data "aws_iam_policy_document" "writer" {
       "s3:DeleteObjectVersion"
     ]
     resources = [
-      "${aws_s3_bucket.backup.arn}/*"
+      "${aws_s3_bucket.backup.arn}/*",
+      "${aws_s3_bucket.obsidian_backup.arn}/*"
     ]
   }
 }
@@ -63,7 +66,8 @@ data "aws_iam_policy_document" "restorer" {
     effect  = "Allow"
     actions = ["s3:ListBucket"]
     resources = [
-      aws_s3_bucket.backup.arn
+      aws_s3_bucket.backup.arn,
+      aws_s3_bucket.obsidian_backup.arn
     ]
   }
   statement {
@@ -75,7 +79,8 @@ data "aws_iam_policy_document" "restorer" {
       "s3:RestoreObject"
     ]
     resources = [
-      "${aws_s3_bucket.backup.arn}/*"
+      "${aws_s3_bucket.backup.arn}/*",
+      "${aws_s3_bucket.obsidian_backup.arn}/*"
     ]
   }
 }
