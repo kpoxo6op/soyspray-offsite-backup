@@ -45,3 +45,13 @@ output "terraform_state_lock_table" {
   value       = aws_dynamodb_table.terraform_state_lock.id
   description = "DynamoDB table for Terraform state locking"
 }
+
+output "obsidian_bucket_name" {
+  value       = aws_s3_bucket.obsidian_backup.bucket
+  description = "Obsidian backup bucket name"
+}
+
+output "obsidian_bucket_arn" {
+  value       = aws_s3_bucket.obsidian_backup.arn
+  description = "Obsidian backup bucket ARN"
+}
