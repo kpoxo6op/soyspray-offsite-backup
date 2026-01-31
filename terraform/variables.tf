@@ -79,3 +79,20 @@ variable "writer_secret_name" {
   default     = "soyspray/offsite/immich-writer"
   description = "AWS Secrets Manager secret name for immich-writer credentials"
 }
+
+variable "obsidian_bucket_name" {
+  type        = string
+  description = "Globally-unique S3 bucket name for Obsidian backups"
+}
+
+variable "obsidian_prefix" {
+  type        = string
+  default     = "obsidian-livesync/"
+  description = "Prefix for Obsidian backups"
+}
+
+variable "obsidian_to_deep_archive_days" {
+  type        = number
+  default     = 7
+  description = "Days before Obsidian backups transition to Deep Archive"
+}
