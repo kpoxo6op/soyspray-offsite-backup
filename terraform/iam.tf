@@ -33,8 +33,8 @@ data "aws_iam_policy_document" "writer" {
     ]
   }
   statement {
-    sid    = "DenyDeletes"
-    effect = "Deny"
+    sid    = "AllowDeletes"
+    effect = "Allow"
     actions = [
       "s3:DeleteObject",
       "s3:DeleteObjectVersion"
@@ -99,4 +99,3 @@ resource "aws_iam_access_key" "writer" {
 resource "aws_iam_access_key" "restorer" {
   user = aws_iam_user.restorer.name
 }
-
