@@ -1,0 +1,43 @@
+---
+- name: Apply a reviewed backup lifecycle plan
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  vars:
+    terraform_directory: "{{ (playbook_dir + '/../terraform') | realpath }}"
+  tasks:
+    - name: Read the saved plan checksum
+      ansible.builtin.stat:
+        path: "{{ lifecycle_plan }}"
+        checksum_algorithm: sha256
+      register: saved_plan
+
+    - name: Require the reviewed plan
+      ansible.builtin.assert:
+        that:
+          - saved_plan.stat.isreg | default(false)
+          - saved_plan.stat.checksum == lifecycle_plan_sha256
+
+    - name: Read the plan without exposing state values
+      ansible.builtin.command:
+        argv: [terraform, "-chdir={{ terraform_directory }}", show, -json, "{{ lifecycle_plan }}"]
+      register: plan_result
+      changed_when: false
+      check_mode: false
+      no_log: true
+
+    - name: Require only in-place lifecycle updates
+      ansible.builtin.assert:
+        that:
+          - item.address in ['aws_s3_bucket_lifecycle_configuration.backup', 'aws_s3_bucket_lifecycle_configuration.obsidian_backup']
+          - item.change.actions == ['update']
+          - item.change.before.bucket == item.change.after.bucket
+          - item.change.after.bucket in ['immich-offsite-archive-au2', 'obsidian-offsite-archive-au2']
+      loop: "{{ (plan_result.stdout | from_json).resource_changes | rejectattr('change.actions', 'equalto', ['no-op']) | list }}"
+      no_log: true
+
+    - name: Apply the reviewed plan under the Terraform state lock
+      ansible.builtin.command:
+        argv: [terraform, "-chdir={{ terraform_directory }}", apply, -input=false, "{{ lifecycle_plan }}"]
+      changed_when: true
+      no_log: true

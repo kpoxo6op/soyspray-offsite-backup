@@ -73,25 +73,6 @@ resource "aws_s3_bucket_lifecycle_configuration" "backup" {
       prefix = var.db_prefix
     }
 
-    transition {
-      days          = var.db_to_glacier_days
-      storage_class = "GLACIER"
-    }
-
-    transition {
-      days          = var.db_to_deep_archive_days
-      storage_class = "DEEP_ARCHIVE"
-    }
-
-    noncurrent_version_transition {
-      noncurrent_days = var.noncurrent_to_deep_archive_days
-      storage_class   = "DEEP_ARCHIVE"
-    }
-
-    noncurrent_version_expiration {
-      noncurrent_days = var.noncurrent_expire_days
-    }
-
     abort_incomplete_multipart_upload {
       days_after_initiation = 7
     }
@@ -113,10 +94,6 @@ resource "aws_s3_bucket_lifecycle_configuration" "backup" {
     noncurrent_version_transition {
       noncurrent_days = var.noncurrent_to_deep_archive_days
       storage_class   = "DEEP_ARCHIVE"
-    }
-
-    noncurrent_version_expiration {
-      noncurrent_days = var.noncurrent_expire_days
     }
 
     abort_incomplete_multipart_upload {
@@ -209,10 +186,6 @@ resource "aws_s3_bucket_lifecycle_configuration" "obsidian_backup" {
     noncurrent_version_transition {
       noncurrent_days = var.noncurrent_to_deep_archive_days
       storage_class   = "DEEP_ARCHIVE"
-    }
-
-    noncurrent_version_expiration {
-      noncurrent_days = var.noncurrent_expire_days
     }
 
     abort_incomplete_multipart_upload {
