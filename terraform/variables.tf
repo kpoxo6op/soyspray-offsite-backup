@@ -32,17 +32,7 @@ variable "media_prefix" {
   description = "Prefix for media backups"
 }
 
-variable "db_to_glacier_days" {
-  type        = number
-  default     = 7
-  description = "Days before DB transitions to Glacier (Flexible Retrieval)"
-}
 
-variable "db_to_deep_archive_days" {
-  type        = number
-  default     = 97
-  description = "Days before DB transitions from Glacier to Deep Archive"
-}
 
 variable "media_to_deep_archive_days" {
   type        = number
